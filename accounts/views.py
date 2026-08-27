@@ -1,10 +1,12 @@
 from rest_framework import generics, permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, EventSerializer, EventRegistration
+from .models import User, EventRegistration, Event
+
 
 class RegisterView(generics.CreateAPIView):
-    serilizer_class = RegisterSerializer
+    serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
 class RoleTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -17,5 +19,7 @@ class RoleTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class LoginView(TokenObtainPairView):
     serializer_class = RoleTokenObtainPairSerializer
+
+class 
 
     

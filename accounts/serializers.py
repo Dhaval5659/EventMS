@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from .models import Event, EventRegistration
 
 User = get_user_model()
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[validate_password])
@@ -20,3 +20,18 @@ class RegisterSerializer(serializers.ModelSerializer):
             role=validated_data.get('role', User.Role.PARTICIPANT),
         )
         return user
+
+class EventSerializer(serializers.ModelSerializer):
+    #role = serializers.CharField(source='profile.role', read_only=True)
+    
+    class Meta:
+        model = Event
+        fields = ('id', 'title', 'description', 'created_by', 'start_time', 'end_time', 'location', 'capaticy', 'created_at', 'updated_at')
+
+class EventRegistrationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EventRegistration
+        fields = ('id', 'event', 'user', 'registered_at', 'reminder_send')
+
+
