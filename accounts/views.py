@@ -20,6 +20,14 @@ class RoleTokenObtainPairSerializer(TokenObtainPairSerializer):
 class LoginView(TokenObtainPairView):
     serializer_class = RoleTokenObtainPairSerializer
 
-class 
+class EventListCreateView(generics.ListCreateAPIView):
+    serializer_class = EventSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOrganizer]  # custom perm you write
+
+    def get_queryset(self):
+        return Event.objects.filter(created_by=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     
