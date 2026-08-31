@@ -22,16 +22,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class EventSerializer(serializers.ModelSerializer):
-    #role = serializers.CharField(source='profile.role', read_only=True)
-    
+    created_by = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Event
-        fields = ('id', 'title', 'description', 'created_by', 'start_time', 'end_time', 'location', 'capaticy', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'description', 'created_by', 'start_time', 'end_time',
+                  'location', 'capacity', 'created_at', 'updated_at')
+
 
 class EventRegistrationSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    event = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = EventRegistration
-        fields = ('id', 'event', 'user', 'registered_at', 'reminder_send')
-
-
+        fields = ('id', 'event', 'user', 'registered_at', 'reminder_sent')
