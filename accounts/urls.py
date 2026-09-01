@@ -1,7 +1,6 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenRefreshView
 from .views import (
- RegisterView, LoginView, 
+ RegisterView, LoginView, LoginRefreshView,
  EventListCreateView, EventDetailView, 
  EventRegistrationView, EventUnRegistrationView,
  EventParticipantsView, MyEventsView,
@@ -10,7 +9,7 @@ from .views import (
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
-    path('login/refresh/', TokenRefreshView.as_view(), name='login_refresh'),
+    path('login/refresh/', LoginRefreshView.as_view(), name='login_refresh'),
 
     # Events — organizer CRUD + participant read (shared view, role-based inside)
     path('events/', EventListCreateView.as_view(), name='event-list-create'),

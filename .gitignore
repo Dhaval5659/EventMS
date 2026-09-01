@@ -1,1 +1,39 @@
 .env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Generated API docs/schema
+api-schema.yml
+api-schema.yaml
+openapi.yml
+openapi.yaml
+
+# Test and coverage output
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

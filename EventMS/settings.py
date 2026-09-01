@@ -1,9 +1,11 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_spectacular',
     'accounts',
 ]
 
@@ -128,6 +131,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'EventMS API',
+    'DESCRIPTION': (
+        'API documentation for EventMS. Use /auth/register/ to create an '
+        'organizer or participant account, then /auth/login/ to get JWT tokens. '
+        'Click Authorize in Swagger UI and enter: Bearer <access_token>.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
 }
 
 SIMPLE_JWT = {
@@ -141,6 +159,8 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'   # matches the TIME_ZONE fix from earlier
+CELERY_BROKER_CONNECTION_TIMEOUT = 1
+CELERY_TASK_IGNORE_RESULT = True
 
 CELERY_BEAT_SCHEDULE = {
     'check-event-reminders-every-minute': {

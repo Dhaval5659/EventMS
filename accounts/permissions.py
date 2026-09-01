@@ -10,9 +10,15 @@ class IsOrganizerOrReadOnly(permissions.BasePermission):
 
 class IsEventOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
+        user = request.user
+
         if request.method in permissions.SAFE_METHODS:
-            return True
-        return obj.created_by == request.user
+            if user.role == 'participant':
+                return True                    # participants can view any event
+            return obj.created_by == user      # organizers can only view their own
+
+        # write methods (PUT/PATCH/DELETE) — only the owning organizer
+        return obj.created_by == user
 
 class IsParticipant(permissions.BasePermission):
     def has_permission(self, request, view):
